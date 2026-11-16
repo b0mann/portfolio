@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Hallmark render screenshots
+.hallmark/shots/
+.hallmark/preflight.json

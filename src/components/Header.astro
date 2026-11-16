@@ -1,0 +1,20 @@
+---
+import { site } from '../site.config';
+---
+
+<p class="banner">
+  <a href={`${site.repo}/releases`}>
+    Site <span class="mono">{site.version}</span>, source on GitHub
+  </a>
+</p>
+<header class="bar" data-bar>
+  <nav class="container bar__inner" aria-label="Primary">
+    <a class="wordmark" href="/" aria-label={`${site.name}, home`}>{site.name}</a>
+    <ul class="bar__links">
+      <li><a href="/#projects">Projects</a></li>
+      <li class="is-wide"><a href="/#stack">Stack</a></li>
+      <li class="is-wide"><a href="/#about">About</a></li>
+      <li><a class="btn btn--quiet" href="/#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>

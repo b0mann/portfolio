@@ -1,0 +1,49 @@
+---
+import { site } from '../site.config';
+
+const hasEmail = !site.email.endsWith('@example.com');
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="container">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <p class="foot__mark">{site.name}</p>
+        <p class="foot__line">{site.role}. Builds software on the side.</p>
+      </div>
+      <nav aria-label="Site">
+        <p class="foot__label">Site</p>
+        <ul>
+          <li><a href="/#projects">Projects</a></li>
+          <li><a href="/#stack">Stack</a></li>
+          <li><a href="/#about">About</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Elsewhere">
+        <p class="foot__label">Elsewhere</p>
+        <ul>
+          <li><a href={site.github} rel="me">GitHub</a></li>
+          <li>
+            {hasEmail ? <a href={`mailto:${site.email}`}>Email</a> : <a href="/#contact">Contact</a>}
+          </li>
+        </ul>
+      </nav>
+      <div>
+        <p class="foot__label">Build</p>
+        <ul>
+          <li>
+            <a href={`${site.repo}/releases`} aria-label={`Version ${site.version}, release notes`}>
+              <span class="mono" data-version>{site.version}</span>
+            </a>
+          </li>
+          <li><a href={site.repo}>Source</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot__base">
+      <span>&copy; {year} {site.name}</span>
+      <span>Static HTML, built with Astro. No trackers.</span>
+    </p>
+  </div>
+</footer>

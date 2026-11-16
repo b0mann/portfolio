@@ -1,0 +1,30 @@
+[
+ {
+  "shape": "Index-First",
+  "theme": "specimen",
+  "axes": "light/high-contrast-serif/cool",
+  "hero": "Ledge",
+  "nav": "banner over a retracting bar",
+  "footer": "index columns",
+  "imagery": "none",
+  "photos": [],
+  "entry": "choreographed type and guide entrance",
+  "fingerprint": "index-first/ledge/specimen/rows-pane/well-lists/split-rows",
+  "sections": [
+   "Hero",
+   "Index",
+   "Rows on a well",
+   "Split",
+   "Rows",
+   "Footer"
+  ],
+  "signature": "the headline resting on measured metric guides",
+  "waived": [
+   "44c",
+   "77"
+  ],
+  "prompt": "personal developer and systems engineering portfolio for a Linux server administrator",
+  "date": "2026-11-16",
+  "mode": "build"
+ }
+]
