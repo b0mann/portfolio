@@ -1,0 +1,35 @@
+---
+import { site } from '../site.config';
+
+// Until a real address is set in src/site.config.ts the page shows a blank to fill, never a fake one.
+const hasEmail = !site.email.endsWith('@example.com');
+const githubHandle = site.github.replace(/^https?:\/\//, '');
+---
+
+<section id="contact" class="section section--tight">
+  <div class="container contact">
+    <h2 data-reveal>Get in touch</h2>
+    <dl>
+      <div data-reveal style="--i:1">
+        <dt>Email</dt>
+        <dd>
+          {
+            hasEmail ? (
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            ) : (
+              <span class="fill" data-fill="email">email address to be added</span>
+            )
+          }
+        </dd>
+      </div>
+      <div data-reveal style="--i:2">
+        <dt>GitHub</dt>
+        <dd><a href={site.github} rel="me">{githubHandle}</a></dd>
+      </div>
+      <div data-reveal style="--i:3">
+        <dt>This site</dt>
+        <dd><a href={site.repo}>Source and releases</a></dd>
+      </div>
+    </dl>
+  </div>
+</section>

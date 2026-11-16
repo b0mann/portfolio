@@ -1,0 +1,29 @@
+---
+import { now } from '../data/stack';
+import { monthYear } from '../lib/projects';
+---
+
+<section id="about" class="section section--long">
+  <div class="container about">
+    <div class="about__text">
+      <h2 data-reveal>Boring servers, on purpose</h2>
+      <p data-reveal style="--i:1">By day I keep Linux servers patched, backed up and quiet.</p>
+      <p data-reveal style="--i:2">Anything I do by hand three times becomes a tool.</p>
+    </div>
+    <div>
+      <ul class="now" aria-label="What I am working on now">
+        {
+          now.items.map((item, i) => (
+            <li data-reveal style={`--i:${i + 1}`}>
+              <h3>{item.title}</h3>
+              <p>{item.line}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="now__cap">
+        Now, as of <time datetime={now.updated}>{monthYear(new Date(now.updated))}</time>.
+      </p>
+    </div>
+  </div>
+</section>

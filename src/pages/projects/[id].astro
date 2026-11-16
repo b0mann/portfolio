@@ -1,0 +1,93 @@
+﻿---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { categoryLabel } from '../../site.config';
+import { getProjects, monthYear, type Project } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+interface Props {
+  project: Project;
+  next: Project;
+}
+
+const { project, next } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<Base title={data.title} description={data.summary}>
+  <article>
+    <section class="case-hero">
+     <div class="container">
+      <p class="case__back"><a href="/#projects">All projects</a></p>
+      <header class="case__head">
+        <h1 style={`view-transition-name: title-${project.id}`}>{data.title}</h1>
+        <p class="lead">{data.summary}</p>
+      </header>
+     </div>
+    </section>
+
+    <section class="case-body">
+     <div class="container">
+      <div class="case__body">
+        <aside class="case__side" aria-label="Project facts">
+          {data.usage && <pre class="usage"><span class="prompt">$ </span>{data.usage}</pre>}
+          <dl class="spec">
+            <div>
+              <dt>Category</dt>
+              <dd>{categoryLabel[data.category]}</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>{data.tags.join(', ')}</dd>
+            </div>
+            <div>
+              <dt>Updated</dt>
+              <dd><time datetime={data.date.toISOString().slice(0, 10)}>{monthYear(data.date)}</time></dd>
+            </div>
+            {
+              data.sample && (
+                <div>
+                  <dt>Status</dt>
+                  <dd>Sample entry</dd>
+                </div>
+              )
+            }
+          </dl>
+          {
+            (data.repoUrl || data.liveUrl) && (
+              <div class="actions">
+                {data.repoUrl && <a class="btn" href={data.repoUrl}>View source</a>}
+                {data.liveUrl && <a class="btn btn--quiet" href={data.liveUrl}>Visit the site</a>}
+              </div>
+            )
+          }
+        </aside>
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+     </div>
+    </section>
+
+    {
+      next.id !== project.id && (
+        <section class="case-next">
+          <nav class="container" aria-label="Next project">
+            <div class="next">
+              <span class="next__label">Next project</span>
+              <a href={`/projects/${next.id}/`}>{next.data.title}</a>
+            </div>
+          </nav>
+        </section>
+      )
+    }
+  </article>
+</Base>

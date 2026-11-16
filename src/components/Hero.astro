@@ -1,0 +1,25 @@
+﻿---
+import { site } from '../site.config';
+---
+
+<section class="hero">
+  <div class="container hero__inner" data-hero>
+    <!-- Metric guides: positioned and measured from the real font by src/scripts/site.ts -->
+    <div class="hero__guides" aria-hidden="true" data-guides>
+      <span class="guide" data-guide="cap" data-label="cap height" style="--i:2"></span>
+      <span class="guide" data-guide="x" data-label="x-height" style="--i:1"></span>
+      <span class="guide" data-guide="base" data-label="baseline" style="--i:0"></span>
+    </div>
+    <h1 class="hero__head">
+      <span class="line" style="--i:0">Servers by day,</span>
+      <span class="line" style="--i:1" data-guide-line>software on the side.<span class="base" data-base></span></span>
+    </h1>
+    <div class="hero__foot">
+      <p class="lead" style="--i:0">{site.role}. I build software once the servers are quiet.</p>
+      <div class="actions" style="--i:1">
+        <a class="btn" href="#projects">See the projects</a>
+        <a class="btn btn--quiet" href={site.github} rel="me">GitHub profile</a>
+      </div>
+    </div>
+  </div>
+</section>

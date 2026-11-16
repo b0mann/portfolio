@@ -1,0 +1,28 @@
+---
+import { stack } from '../data/stack';
+---
+
+<section id="stack" class="section section--well">
+  <div class="container">
+    <header class="head-split">
+      <h2 data-reveal>The stack, without skill bars</h2>
+    </header>
+    <div class="stack">
+      {
+        stack.map((group, g) => (
+          <div data-reveal style={`--i:${g * 2}`}>
+            <h3>{group.title}</h3>
+            <dl>
+              {group.rows.map((row) => (
+                <div>
+                  <dt>{row.area}</dt>
+                  <dd>{row.items.join(', ')}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

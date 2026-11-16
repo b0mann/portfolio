@@ -1,0 +1,95 @@
+---
+import { categories, categoryLabel } from '../site.config';
+import { getProjects, monthYear } from '../lib/projects';
+
+const projects = await getProjects();
+const used = categories.filter((c) => projects.some((p) => p.data.category === c));
+const allSamples = projects.length > 0 && projects.every((p) => p.data.sample);
+---
+
+<section id="projects" class="section">
+  <div class="container">
+    <header class="head-split">
+      <h2 data-reveal>Selected projects</h2>
+      <p class="lead" data-reveal style="--i:1">
+        {
+          allSamples
+            ? 'Sample entries that show the layout. Real repositories replace them.'
+            : 'Tools and services I built, run and maintain.'
+        }
+      </p>
+    </header>
+
+    <div class="filter" role="group" aria-label="Filter projects by category" data-filter>
+      <button type="button" aria-pressed="true" data-category="all">All</button>
+      {
+        used.map((c) => (
+          <button type="button" aria-pressed="false" data-category={c}>
+            {categoryLabel[c]}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="index">
+      <ol class="index__rows" data-rows>
+        {
+          projects.map((p, i) => (
+            <li
+              class:list={['row', { 'row--lead': i === 0, 'is-current': i === 0 }]}
+              data-category={p.data.category}
+              data-id={p.id}
+              data-reveal
+              style={`--i:${i}; view-transition-name: row-${p.id}`}
+            >
+              <a class="row__link" href={`/projects/${p.id}/`}>
+                <time class="row__year mono" datetime={p.data.date.toISOString().slice(0, 10)}>
+                  {p.data.date.getUTCFullYear()}
+                </time>
+                <div>
+                  <h3 class="row__title" style={`view-transition-name: title-${p.id}`}>
+                    {p.data.title}
+                  </h3>
+                  <p class="row__summary">{p.data.summary}</p>
+                </div>
+                <span class="row__cat">{categoryLabel[p.data.category]}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li class="index__empty" data-empty hidden>No projects in this category yet.</li>
+      </ol>
+
+      <aside class="index__pane" aria-label="Project preview" data-pane>
+        {
+          projects.map((p, i) => (
+            <div class:list={['panel', { 'is-active': i === 0 }]} data-panel={p.id}>
+              {p.data.usage && (
+                <pre class="usage"><span class="prompt">$ </span>{p.data.usage}</pre>
+              )}
+              <dl class="spec">
+                <div>
+                  <dt>Stack</dt>
+                  <dd>{p.data.tags.join(', ')}</dd>
+                </div>
+                <div>
+                  <dt>Updated</dt>
+                  <dd>{monthYear(p.data.date)}</dd>
+                </div>
+                {p.data.sample && (
+                  <div>
+                    <dt>Status</dt>
+                    <dd>Sample entry</dd>
+                  </div>
+                )}
+              </dl>
+              <p>
+                <a href={`/projects/${p.id}/`} tabindex="-1">Read the {p.data.title} case study</a>
+              </p>
+            </div>
+          ))
+        }
+      </aside>
+    </div>
+  </div>
+</section>
